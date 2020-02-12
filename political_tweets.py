@@ -18,8 +18,8 @@
 #
 #
 # c = twint.Config()
-# c.Search = "Buttigieg OR Mayor Pete OR @PeteButtigieg AND -Biden AND -Warren AND -Klobuchar AND -Bloomberg AND -Yang AND -Sanders AND -Bernie AND -@ewarren"\
- # "AND -@SenWarren AND -@MikeBloomberg AND -@JoeBiden AND -@amyklobuchar AND -@SenAmyKlobuchar AND -@BernieSanders AND -@SenSanders AND -@AndrewYang"
+# c.Search = "Buttigieg OR Mayor Pete OR @PeteButtigieg AND -Biden AND -Warren AND -Klobuchar AND -Bloomberg AND -Sanders AND -Bernie AND -@ewarren"\
+ # "AND -@SenWarren AND -@MikeBloomberg AND -@JoeBiden AND -@amyklobuchar AND -@SenAmyKlobuchar AND -@BernieSanders AND -@SenSanders"
 # c.Store_csv = True
 # c.Verified = True
 # c.Output = 'buttigieg.csv'
@@ -51,6 +51,13 @@ from sklearn.metrics import f1_score
 from sklearn.naive_bayes import MultinomialNB
 from nltk.tokenize import RegexpTokenizer
 from vaderSentiment.vaderSentiment import SentimentIntensityAnalyzer
+import re
+from __future__ import print_function
+import pyLDAvis
+import pyLDAvis.sklearn
+pyLDAvis.enable_notebook()
+from sklearn.datasets import fetch_20newsgroups
+from sklearn.decomposition import LatentDirichletAllocation
 
 pd.set_option('display.max_columns', None)
 
@@ -67,9 +74,6 @@ buttigieg = drop_col(buttigieg)
 warren = pd.read_csv('warren.csv')
 warren = drop_col(warren)
 
-yang = pd.read_csv('yang.csv')
-yang = drop_col(yang)
-
 bernie = pd.read_csv('bernie.csv')
 bernie = drop_col(bernie)
 
@@ -82,27 +86,67 @@ amy = drop_col(amy)
 bloomberg = pd.read_csv('bloomberg.csv')
 bloomberg = drop_col(bloomberg)
 
-candidates = [buttigieg, warren, yang, bernie, biden, amy, bloomberg]
+trump = pd.read_csv('trump.csv')
+trump = drop_col(trump)
 
+
+candidates = [bernie, buttigieg, amy, warren, biden, bloomberg, trump]
 
 #-----------------------------------------------------------------------------------------------
 
 
-# tokenize and remove stopwords
-nltk.download('stopwords')
-stop_words=set(stopwords.words("english"))
+# TOKENIZE EVERY TWEET
 from nltk.tokenize import RegexpTokenizer
 tokenizer = RegexpTokenizer(r'[a-zA-Z0-9]+')
 
-yang_token_tweet = []
-for i in yang['tweet']:
-    token_tweet = tokenizer.tokenize(i)
-    yang_token_tweet.append(token_tweet)
+def tokenize(tweets):
+    tokenized_tweets = []
+    for i in tweets:
+        token_tweet = tokenizer.tokenize(i)
+        tokenized_tweets.append(token_tweet)
+    return tokenized_tweets
 
-yang['token_tweet'] = yang_token_tweet
+token_amy = tokenize(amy['tweet'])
+token_bloomberg = tokenize(bloomberg['tweet'])
+token_buttigieg = tokenize(buttigieg['tweet'])
+token_warren = tokenize(warren['tweet'])
+token_biden = tokenize(biden['tweet'])
+token_bernie = tokenize(bernie['tweet'])
+
+# CREATE WORD BANK FOR EACH CANDIDATE
+bloomberg_bank = word_bank(token_bloomberg)
+buttigieg_bank = word_bank(token_buttigieg)
+warren_bank = word_bank(token_warren)
+biden_bank = word_bank(token_biden)
+bernie_bank = word_bank(token_bernie)
+
+# Remove links
+def remove_urls(vTEXT):
+    vTEXT = re.sub(r'https?:\/\/.*\s?', '', vTEXT, flags=re.MULTILINE)
+    return(vTEXT)
+
+def remove_twitpics(vTEXT):
+    vTEXT1 = re.sub(r'pic\.twitter\.com\/.*\s?', '', vTEXT, flags=re.MULTILINE)
+    return(vTEXT1)
+
+def remove_links(tweet):
+    no_urls = []
+    no_twitpics = []
+    for i in tweet:
+        removed_urls = remove_urls(i)
+        no_urls.append(removed_urls)
+        for j in no_urls:
+            removed_twitpics = remove_twitpics(j)
+            no_twitpics.append(removed_twitpics)
+    return no_twitpics
 
 
 #-----------------------------------------------------------------------------------------------
+
+
+for democrat in candidates:
+    democrat.tweet = democrat.tweet.str.replace(r'https?:\/\/.*\s?', '')
+    democrat.tweet = democrat.tweet.str.replace(r'pic\.twitter\.com\/.*\s?', '')
 
 
 analyzer = SentimentIntensityAnalyzer()
@@ -136,9 +180,9 @@ for democrat in candidates:
     democrat['compound_sentiment'] = democrat.apply(compound_sentiment, axis=1)
 
 
-bernie.head()
 
-names = ['Buttigieg', 'Warren', 'Yang', 'Bernie', 'Biden', 'Klobuchar', 'Bloomberg']
+names = ['Sanders', 'Buttigieg', 'Klobuchar', 'Warren', 'Biden', 'Bloomberg', 'Trump']
+
 idx = 0
 sentiment = {}
 for democrat in candidates:
@@ -147,3 +191,47 @@ for democrat in candidates:
     idx += 1
 
 sentiment
+
+
+def positive(row):
+    if row['positive_sentiment'] > row['negative_sentiment']:
+        return 1
+    else:
+        return 0
+
+def negative(row):
+    if row['negative_sentiment'] > row['positive_sentiment']:
+        return 1
+    else:
+        return 0
+
+
+for democrat in candidates:
+    democrat['positive_tweet'] = democrat.apply(positive, axis=1)
+    democrat['negative_tweet'] = democrat.apply(negative, axis=1)
+
+
+
+count = 0
+pos_neg = {}
+for democrat in candidates:
+    pos_neg[names[count]] = {'positive': (democrat['positive_tweet'].sum() / len(democrat)), 'negative': (democrat['negative_tweet'].sum() / len(democrat))}
+    count += 1
+
+pos_neg
+
+
+sentiment_df = pd.DataFrame(pos_neg).T
+sentiment_df
+
+
+sentiment_df.plot(kind='bar', figsize=(15,8), color=['b', 'r'])
+plt.title('Sentiment Analysis of Tweets Mentioning Candidates', fontsize=20)
+plt.legend(fontsize=15)
+plt.xticks(fontsize=13, rotation=0)
+plt.yticks(fontsize=13)
+plt.xlabel('Candidate', fontsize=18)
+plt.ylabel('% of Tweets', fontsize=18)
+
+
+#-----------------------------------------------------------------------------------------------
