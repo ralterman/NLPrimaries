@@ -1,31 +1,3 @@
-# !pip install -U -q PyDrive
-# from pydrive.auth import GoogleAuth
-# from pydrive.drive import GoogleDrive
-# from google.colab import auth
-# from oauth2client.client import GoogleCredentials
-# ​
-# auth.authenticate_user()
-# gauth = GoogleAuth()
-# gauth.credentials = GoogleCredentials.get_application_default()
-# drive = GoogleDrive(gauth)
-# ​
-# from google.colab import drive
-# drive.mount('/content/gdrive')
-#
-# import twint
-# import nest_asyncio
-# nest_asyncio.apply()
-#
-#
-# c = twint.Config()
-# c.Search = "Buttigieg OR Mayor Pete OR @PeteButtigieg AND -Biden AND -Warren AND -Klobuchar AND -Bloomberg AND -Sanders AND -Bernie AND -@ewarren"\
- # "AND -@SenWarren AND -@MikeBloomberg AND -@JoeBiden AND -@amyklobuchar AND -@SenAmyKlobuchar AND -@BernieSanders AND -@SenSanders"
-# c.Store_csv = True
-# c.Verified = True
-# c.Output = 'buttigieg.csv'
-# c.Since = '2020-01-01'
-
-
 import pandas as pd
 import matplotlib.pyplot as plt
 import nltk
@@ -47,12 +19,15 @@ from langdetect import detect_langs
 pd.set_option('display.max_columns', None)
 
 
+
+# Drop unnecessary columns
 def drop_col(df):
     new_df = df.drop(['id', 'conversation_id', 'created_at','timezone','user_id','place','urls','photos','replies_count','retweets_count', 'likes_count','cashtags',
                       'retweet','quote_url','video','near','geo','source','user_rt_id','user_rt','retweet_id','retweet_date','translate','trans_src','trans_dest'], axis=1)
     return new_df
 
 
+# Read in csv of tweets for all candidates (from twint_scraper.ipynb script) and drop aforementioned columns
 buttigieg = pd.read_csv('buttigieg.csv')
 buttigieg = drop_col(buttigieg)
 
@@ -75,14 +50,16 @@ trump = pd.read_csv('trump.csv')
 trump = drop_col(trump)
 
 
+
 candidates = [bernie, buttigieg, amy, warren, biden, bloomberg, trump]
 
-
+# Remove links and pictures from tweets
 for democrat in candidates:
     democrat.tweet = democrat.tweet.str.replace(r'https?:\/\/.*\s?', '')
     democrat.tweet = democrat.tweet.str.replace(r'pic\.twitter\.com\/.*\s?', '')
 
 
+# Remove non-english tweets
 def language(row):
     try:
         return detect(row['tweet'])
@@ -105,6 +82,7 @@ trump = trump[trump['language'] == 'en'].reset_index(drop=True)
 #-----------------------------------------------------------------------------------------------
 
 
+# Create sentiment analysis functions
 analyzer = SentimentIntensityAnalyzer()
 
 def positive_sentiment(row):
@@ -130,6 +108,7 @@ def compound_sentiment(row):
 
 candidates = [bernie, buttigieg, amy, warren, biden, bloomberg, trump]
 
+# Run sentiment analysis on every tweet for every candidate and add scores to the dataframe
 for democrat in candidates:
     democrat['positive_sentiment'] = democrat.apply(positive_sentiment, axis=1)
     democrat['neutral_sentiment'] = democrat.apply(neutral_sentiment, axis=1)
@@ -137,8 +116,10 @@ for democrat in candidates:
     democrat['compound_sentiment'] = democrat.apply(compound_sentiment, axis=1)
 
 
+
 names = ['Sanders', 'Buttigieg', 'Klobuchar', 'Warren', 'Biden', 'Bloomberg', 'Trump']
 
+# Create sentiment analysis dictionary with averages
 idx = 0
 sentiment = {}
 for democrat in candidates:
@@ -149,6 +130,7 @@ for democrat in candidates:
 sentiment
 
 
+ # Mark each tweet as either positive or negative depending on higher sentiment value
 def positive(row):
     if row['positive_sentiment'] > row['negative_sentiment']:
         return 1
@@ -167,7 +149,7 @@ for democrat in candidates:
     democrat['negative_tweet'] = democrat.apply(negative, axis=1)
 
 
-
+# Create dictionary with average tweet positivity and negativity per candidate
 count = 0
 pos_neg = {}
 for democrat in candidates:
@@ -181,6 +163,7 @@ sentiment_df = pd.DataFrame(pos_neg).T
 sentiment_df
 
 
+# Plot these positive and negative scores in double bar chart
 sentiment_df.plot(kind='bar', figsize=(15,8), color=['b', 'r'])
 plt.title('Sentiment Analysis of Tweets Mentioning Candidates', fontsize=20)
 plt.legend(fontsize=15)
@@ -192,7 +175,7 @@ plt.ylabel('% of Tweets', fontsize=18)
 
 #-----------------------------------------------------------------------------------------------
 
-
+# Export cleaned csv files for topic modeling
 buttigieg.to_csv('buttigieg_cleaned.csv', index=False)
 warren.to_csv('warren_cleaned.csv', index=False)
 bernie.to_csv('bernie_cleaned.csv', index=False)
