@@ -1,22 +1,14 @@
 # #NLPrimaries
+### _An analysis of tweets mentioning the 2020 Democratic presidential candidates through the use of natural language processing_
+Project Partner: [Julia Chong](https://github.com/juliachong "Julia Chong's GitHub")
 
-GOAL: ANALYZE TWEETS MENTIONING THE CURRENT 2020 DEMOCRATIC PRESIDENTIAL CANDIDATES
+## Goal
+Analyze tweets _mentioning_ the 2020 Democratic presidential candidates, in efforts to see how each candidate is viewed and key topics that are being discussed
 
-Data:
-- Gathered data through the use of Twint — an advanced Twitter scraping tool (twint_scraper.ipynb)
-- Used only verified accounts in efforts to limit the number of tweets scraped, while also capturing a larger range of dates
-- Discluded tweets that mentioned multiple candidates, so not to interfere with analysis
-- Removed links, images, stop words, and non-English tweets
-
-Process:
-- Performed sentiment (political_tweets.py) and subjectivity analysis, as well as TF-IDF on each tweet (political_tweets_atom.py)
-- Created multiple visualizations, as can be seen in NLPrimaries.pdf in this repository
-- Wrapped up analysis through topic modeling with the use of latent dirichlet allocation (LDA), in an attempt to see if tweets would be separated by candidate (also can be seen in NLPrimaries.pdf, with code in political_tweets.ipynb) 
-
-Conclusions:
-- Overall, the tweets mentioning the candidates were all very similar and thus, difficult to differentiate between candidates
-- Twitter is oftentimes a polarized platform, with many negative and many positive opinions
-
-Future Work:
-- Would be interesting to compare these tweets with tweets about Trump around this time in 2016
-- Build classification model and/or neural network to differentiate tweets by different candidates
+## Data Cleaning/Preprocessing
+__[Twint](https://github.com/twintproject/twint "Twint Documentation") - An advanced Twitter scraping tool__
+* Make sure [nest-asyncio](https://pypi.org/project/nest-asyncio/ "nest-asyncio Documentation") is installed, imported, and applied
+__Thousands of tweets for each candidate__
+1. Each tweet contains only one candidate's name and/or Twitter handle
+2. Tweets are from verified accounts only to contain number of tweets
+3. Removed links, images, stopwords, and non-English from tweets
