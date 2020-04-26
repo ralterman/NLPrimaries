@@ -35,6 +35,7 @@ _Subjectivity is a float within the range [0.0, 1.0] where 0.0 is very objective
 
 ## TF-IDF
 _Term Frequency Inverse Document Frequency_
+
 __Use Scikit-Learn's [Feature Extraction](https://scikit-learn.org/stable/modules/feature_extraction.html "TFIDF Documentation") method__
 * Tokenize and Lemmatize all of the tweets first using [NLTK](https://www.nltk.org/ "NLTK Documentation") functions, and make all of the     tokens lowercase
 * Remove NLTK's set of stopwords and add our own stopwords to remove
