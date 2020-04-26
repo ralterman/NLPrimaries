@@ -23,3 +23,12 @@ __[VADER](https://github.com/cjhutto/vaderSentiment "VADER Documentation") (Vale
 * Mark each tweet as either positive or negative depending on which score is higher
 * Create dictionary with average number of positive and negative tweets for each candidate to use for visualization
   <p align="center"><img src="https://github.com/ralterman/NLPrimaries/blob/master/images/sentiment.png"></p>
+
+## Subjectivity Analysis
+__[TextBlob](https://textblob.readthedocs.io/en/dev/quickstart.html "TextBlob Documentation") - provides access to common text-processing operations__
+* _Subjectivity is a float within the range [0.0, 1.0] where 0.0 is very objective and 1.0 is very subjective_
+* Follow documentation to install, import, and implement
+* Obtain sentiment for each tweet
+* Use regular expressions to capture float values and then convert these strings to floats
+  <p align="center"><img src="https://github.com/ralterman/NLPrimaries/blob/master/images/subjectivity.png"></p>
+
