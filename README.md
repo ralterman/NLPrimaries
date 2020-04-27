@@ -33,9 +33,7 @@ _Subjectivity is a float within the range [0.0, 1.0] where 0.0 is very objective
 * Use regular expressions to capture float values and then convert these strings to floats
   <p align="center"><img src="https://github.com/ralterman/NLPrimaries/blob/master/images/subjectivity.png"></p>
 
-## TF-IDF
-_Term Frequency Inverse Document Frequency_
-
+## TF-IDF — _Term Frequency Inverse Document Frequency_
 __Use Scikit-Learn's [Feature Extraction](https://scikit-learn.org/stable/modules/feature_extraction.html "TFIDF Documentation") method__
 * Tokenize and Lemmatize all of the tweets first using [NLTK](https://www.nltk.org/ "NLTK Documentation") functions, and make all of the     tokens lowercase
 * Remove NLTK's set of stopwords and add our own stopwords to remove
@@ -44,8 +42,17 @@ __Use Scikit-Learn's [Feature Extraction](https://scikit-learn.org/stable/module
   <p align="center"><img src="https://github.com/ralterman/NLPrimaries/blob/master/images/tfidf.png"></p>
 
 ## Word Clouds
-__Display the most commonly used words in tweets about each candidate, where the bigger the word appears in the cloud, the more commonly it is used__
-* Leverage NLTK [FreqDist()](http://www.nltk.org/api/nltk.html?highlight=freqdist "FreqDist Documentation") function:
+__Leverage NLTK [FreqDist()](http://www.nltk.org/api/nltk.html?highlight=freqdist "FreqDist Documentation") function__
+* Displays the most commonly used words in tweets about each candidate, where the bigger the word appears in the cloud, the more commonly it is used:
   <p align="center"><img src="https://github.com/ralterman/NLPrimaries/blob/master/images/wordcloudcode.png"></p>
   <p align="center"><img src="https://github.com/ralterman/NLPrimaries/blob/master/images/wordclouds1.png"></p>
   <p align="center"><img src="https://github.com/ralterman/NLPrimaries/blob/master/images/wordclouds2.png"></p>
+
+## Topic Modeling with LDA ([Latent Dirichlet Allocation](https://en.wikipedia.org/wiki/Latent_Dirichlet_allocation "LDA Wiki"))
+__Used [pyLDAvis](https://pyldavis.readthedocs.io/en/latest/readme.html "pyLDAvis Documentation") - Python library for interactive topic model visualization__
+* Create one list of all of the tweets across candidates and eliminate given and implemented stopwords
+* Run CountVectorizer() and TfidfVectorizer() functions on the tweets, followed by the LatentDirichletAllocation() function
+* Create topic models using either TF or TF-IDF
+
+_LDA separates the tokens in the tweets based on underlying, unobserved similar topics to help users interpret them. Check out the demo below:_
+  ### [Demo](https://drive.google.com/file/d/1aTVkNNAaKgbUXUCuS0lMgQBpQ16ebItX/view?usp=sharing "LDA Demo")
