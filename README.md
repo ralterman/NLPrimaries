@@ -42,3 +42,10 @@ __Use Scikit-Learn's [Feature Extraction](https://scikit-learn.org/stable/module
 * Convert a collection of text documents to a matrix of token counts
 * Use TfidfVectorizer(), TfidfTransformer(), CountVectorizer(), fit_transform(), and fit() functions to get TF-IDF vector for each document (candidate's tweets)
   <p align="center"><img src="https://github.com/ralterman/NLPrimaries/blob/master/images/tfidf.png"></p>
+
+## Word Clouds
+__Display the most commonly used words in tweets about each candidate, where the bigger the word appears in the cloud, the more commonly it is used__
+* Leverage NLTK [FreqDist()](http://www.nltk.org/api/nltk.html?highlight=freqdist "FreqDist Documentation") function:
+  <p align="center"><img src="https://github.com/ralterman/NLPrimaries/blob/master/images/wordcloudcode.png"></p>
+  <p align="center"><img src="https://github.com/ralterman/NLPrimaries/blob/master/images/wordclouds1.png"></p>
+  <p align="center"><img src="https://github.com/ralterman/NLPrimaries/blob/master/images/wordclouds2.png"></p>
