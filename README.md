@@ -62,3 +62,7 @@ __Used [pyLDAvis](https://pyldavis.readthedocs.io/en/latest/readme.html "pyLDAvi
 
 _LDA separates the tokens in the tweets based on underlying, unobserved similar topics to help users interpret them. Check out the demo below:_
   ### [Demo](https://drive.google.com/file/d/1aTVkNNAaKgbUXUCuS0lMgQBpQ16ebItX/view?usp=sharing "LDA Demo")
+
+---
+
+### Check out my blog on [Medium](https://towardsdatascience.com/nlprimaries-1a97c61b223c?source=friends_link&sk=deba89ade35a4719dcf23d3f693364ef "NLPrimaries Medium Blog") about this project! 
