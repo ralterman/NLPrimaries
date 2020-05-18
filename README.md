@@ -61,7 +61,7 @@ __Used [pyLDAvis](https://pyldavis.readthedocs.io/en/latest/readme.html "pyLDAvi
 * Create topic models using either TF or TF-IDF
 
 _LDA separates the tokens in the tweets based on underlying, unobserved similar topics to help users interpret them. Check out the demo below:_
-  ### [Demo](https://drive.google.com/file/d/1aTVkNNAaKgbUXUCuS0lMgQBpQ16ebItX/view?usp=sharing "LDA Demo")
+  ### [Demo](https://www.youtube.com/watch?v=TBHFkO_m1Es "LDA Demo")
 
 ---
 
