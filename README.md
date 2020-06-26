@@ -33,7 +33,7 @@ __[VADER](https://github.com/cjhutto/vaderSentiment "VADER Documentation") (Vale
 ## Subjectivity Analysis
 __[TextBlob](https://textblob.readthedocs.io/en/dev/quickstart.html "TextBlob Documentation") - provides access to common text-processing operations__
 
-_Subjectivity is a float within the range [0.0, 1.0] where 0.0 is very objective and 1.0 is very subjective_
+_Subjectivity is a float within the range [0.0, 1.0] where 0.0 is very __objective__ and 1.0 is very __subjective___
 * Follow documentation to install, import, and implement
 * Obtain sentiment for each tweet
 * Use regular expressions to capture float values and then convert these strings to floats
