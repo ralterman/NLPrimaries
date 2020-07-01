@@ -2,6 +2,7 @@
 ### _An analysis of tweets mentioning the 2020 Democratic presidential candidates through the use of natural language processing_
 Project Partner: [Julia Chong](https://github.com/juliachong "Julia Chong's GitHub")
 
+---
 ## Goal
 Analyze tweets _mentioning_ (not written by) the 2020 Democratic presidential candidates, in efforts to see how each candidate is viewed and key topics that are being discussed
 
