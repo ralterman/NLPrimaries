@@ -6,10 +6,10 @@ Project Partner: [Julia Chong](https://github.com/juliachong "Julia Chong's GitH
 Analyze tweets _mentioning_ (not written by) the 2020 Democratic presidential candidates, in efforts to see how each candidate is viewed and key topics that are being discussed
 
 ## File Directory
-* [political_tweets.py](https://github.com/ralterman/NLPrimaries/blob/master/political_tweets.py "political_tweets.py File") - sentiment     analysis code
 * [political_tweets_atom.py](https://github.com/ralterman/NLPrimaries/blob/master/political_tweets_atom.py "political_tweets_atom.py File") - tokenization, lemmetization, TF–IDF, and subjectivity analysis code
 * [political_tweets_LDA.ipynb](https://github.com/ralterman/NLPrimaries/blob/master/political_tweets_LDA.ipynb "political_tweets_LDA.ipynb File") - code for LDA of tweets
-* [twint_scraping.ipynb](https://github.com/ralterman/NLPrimaries/blob/master/twint_scraping.ipynb "twint_scraping.ipynb") - code to use     Twint to scrape tweets from Twitter
+* [sentiment_analysis.py](https://github.com/ralterman/NLPrimaries/blob/master/sentiment_analysis.py "sentiment_analysis.py File") - sentiment analysis code
+* [twint_scraper.ipynb](https://github.com/ralterman/NLPrimaries/blob/master/twint_scraper.ipynb "twint_scraper.ipynb") - code to use Twint to scrape tweets from Twitter
 
 ## Data Cleaning/Preprocessing
 __Thousands of tweets for each candidate__
