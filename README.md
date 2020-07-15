@@ -9,7 +9,7 @@ Analyze tweets _mentioning_ (not written by) the 2020 Democratic presidential ca
 * [twint_scraper.ipynb](https://github.com/ralterman/NLPrimaries/blob/master/twint_scraper.ipynb "twint_scraper.ipynb") - code to use Twint to scrape tweets from Twitter
 * [sentiment_analysis.py](https://github.com/ralterman/NLPrimaries/blob/master/sentiment_analysis.py "sentiment_analysis.py File") - sentiment analysis code
 * [text_analysis.py](https://github.com/ralterman/NLPrimaries/blob/master/text_analysis.py "text_analysis.py File") - tokenization, lemmetization, TF–IDF, and subjectivity analysis code
-* [LDA.ipynb](https://github.com/ralterman/NLPrimaries/blob/master/LDA.ipynb "LDA.ipynb File") - code for LDA of tweets
+* [lda.ipynb](https://github.com/ralterman/NLPrimaries/blob/master/lda.ipynb "lda.ipynb File") - code for LDA of tweets
 
 ## Data Cleaning/Preprocessing
 __Thousands of tweets for each candidate__
